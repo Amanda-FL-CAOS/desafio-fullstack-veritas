@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kanban</title>
+
+  <!-- normalize CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Fonte Ubuntu -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Raleway:ital@0;1&family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/src/styles/kanban.css">
+</head>
+<body>
+  <h1 id="title">Kanban</h1>
+
+  <div class="square-group task">
+    <!-- To Do -->
+    <div class="square" id="to-do" ondragover="event.preventDefault()" ondrop="handleDrop(event, 'todo')">
+      <h2 class="square-content square-title">A fazer:</h2>
+      <ul class="class-list to-do"></ul>
+      <button type="button" class="add-task"><strong>+</strong></button>
+      <div class="modal"></div>
+    </div>
+
+    <!-- Doing -->
+    <div class="square" id="doing" ondragover="event.preventDefault()" ondrop="handleDrop(event, 'doing')">
+      <h2 class="square-content square-title">Em andamento:</h2>
+      <ul class="class-list doing"></ul>
+      <button type="button" class="add-task"><strong>+</strong></button>
+      <div class="modal"></div>
+    </div>
+
+    <!-- Done -->
+    <div class="square" id="done" ondragover="event.preventDefault()" ondrop="handleDrop(event, 'done')">
+      <h2 class="square-content square-title">Concluído:</h2>
+      <ul class="class-list done"></ul>
+      <button type="button" class="add-task"><strong>+</strong></button>
+      <div class="modal"></div>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script>
+    // --- Drag and Drop ---
+    function handleDragStart(event) {
+      event.dataTransfer.setData('text/plain', event.target.dataset.id);
+    }
+
+    function handleDrop(event, newStatus) {
+      event.preventDefault();
+      const id = event.dataTransfer.getData('text/plain');
+      if (!id) return;
+      moveTaskTo(id, newStatus);
+    }
+  </script>
+
+  <script src="/src/scripts/engine.js"></script>
+</body>
+</html>
